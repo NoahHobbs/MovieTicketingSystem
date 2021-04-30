@@ -7,6 +7,7 @@
 	</head>
 	<body>
 		<h1> Create Account</h1>
+			<!-- Once form accepts plaintext user password, switch to Spring's BCryptPasswordEncoder coding -->
 		<form name="form" th:action="@{/addCustomer}" th:object="${newProgramUser}" onsubmit="return formValidate(this);" method='POST'>
 			User Name: <input name="userName" size="20" th:field="*{userName}"> <br />
 			Password: <input name="userPassword" size="10" th:field="*{userPassword.password}" id="userPassword"><br />
@@ -19,33 +20,37 @@
 			//This javascript checks that the user is entering valid input
 			//Note to teammates I'm not 100% sure if I need to say form.passwords.userPass or if it should be form.userPass
 				//RE: note above: I added a form name, and id name to use the passwords.userPassword value - Sterling Rhone -sprhone
+			
 			function formValidate(form) {
 				//these variables hold the regex that we will use to check that the user is entering valid information
 				var passCheck = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
 				var userCheck = /^[a-zA-Z0-9_-]{3,15}$/;
 				// the if statements below are just ensuring that the user won't enter blank or invalid info
+
 				if (form.userName.value == "") {
-					   
-					   window.alert("Warning! The username field is empty!");
-					   form.userName.focus();
-					   return false;
-					   
-					  } else if (!userCheck.test(form.userName.value)){
-						  window.alert("Warning! Invalid username!");
-						   form.userName.focus();
-						   return false;
-					  }
+
+					window.alert("Warning! The username field is empty!");
+					form.userName.focus();
+					return false;
+
+				} else if (!userCheck.test(form.userName.value)) {
+					window.alert("Warning! Invalid username!");
+					form.userName.focus();
+					return false;
+				}
+
 				if (form.userPassword.value == "") {
-					   
-					   window.alert("Warning! The Password field is empty!");
-					   form.userPassword.focus();
-					   return false;
-					   
-					  } else if(!passCheck.test(form.userPassword.value)) {
-						  window.alert("Warning! The Password must be at least 8 characters long and must include:\nOne uppercase, one lowercase, and one special character.");
-						  form.userPassword.focus();
-						  return false;
-					  }
+
+					window.alert("Warning! The Password field is empty!");
+					form.userPassword.focus();
+					return false;
+
+				} else if (!passCheck.test(form.userPassword.value)) {
+					window
+							.alert("Warning! The Password must be at least 8 characters long and must include:\nOne uppercase, one lowercase, and one special character.");
+					form.userPassword.focus();
+					return false;
+				}
 			}
 		</script>
 		<a href="index.html">Home</a>

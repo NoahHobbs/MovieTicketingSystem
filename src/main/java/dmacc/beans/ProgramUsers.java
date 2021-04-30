@@ -1,5 +1,6 @@
 package dmacc.beans;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +29,7 @@ public class ProgramUsers {
 	private long userId;
 	private String userType;	//Employee or Customer or Manager(can edit employees)
 	private String userAccess;	//Do they get elevated access? Edit level or view only
+	@Column(unique = true)
 	private String userName;
 	@Autowired
 	private Passwords userPassword;

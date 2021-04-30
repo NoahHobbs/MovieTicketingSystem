@@ -9,9 +9,10 @@
 		<h1>Welcome to our theater!</h1>
 		<p><a href="viewMovies?">View Current Movies</a></p>
 		<p><a href="addCustomer">Create an account</a></p>
-		<form action="signIn">
+		<form name="form" th:action="/signIn" th:object=${existingProgramUser} onsubmit="return formValidate(this);" method= 'POST'>
 			<label for="name">Name:</label>
 			<input type="text" id="name" placeholder="name"><br>
+				<!-- Once form accepts plaintext user password, switch to Spring's BCryptPasswordEncoder coding -->
 			<label for="password">Password:</label>
 			<input type="password" id="password" placeholder="password" >
 			<input type="submit" value="Sign In">
@@ -19,7 +20,7 @@
 		<script>
 			function formValidate(form) {
 				var passCheck = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
-				var userCheck = /^[a-z0-9_-]{3,15}$/;
+				var userCheck = /^[a-zA-Z0-9_-]{3,15}$/;
 				if (form.name.value == "") {
 					   
 					   window.alert("Warning! The username field is empty!");
@@ -42,6 +43,14 @@
 						  form.password.focus();
 						  return false;
 					  }
+				
+				var customer = findByUserName(form.name.value)
+				alert("Customer info = " + customer)
+				if (form.password.value != customer.password) {
+					window.alert("Invalid password for this user!");
+					form.password.focus();
+					return false;
+				}	
 			}
 		</script>
 	</body>
